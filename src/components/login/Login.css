@@ -1,0 +1,28 @@
+.fo{
+border: 3px solid;
+padding: 50px;
+width: 50%;
+margin-left: 10px;
+box-shadow: 10px 10px 8px 10px #888888;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(2px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+.form{
+    background: url("https://assets.telegraphindia.com/telegraph/2021/Oct/1633982631_shutterstock_682897339.jpg");
+    background-size :100% 100%;
+    background-repeat: no-repeat;
+    height: 700px;
+    position: relative;
+} 
+.log{
+    margin-left: 300px;
+}
+.reg{
+text-decoration: none;
+}
+

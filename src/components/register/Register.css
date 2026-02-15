@@ -1,0 +1,29 @@
+.fo{
+    border: 3px solid;
+    padding: 50px;
+    width: 50%;
+    margin-left: 10px;
+    box-shadow: 10px 10px 8px 10px #888888;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    }
+    .register{
+        background-image: url("https://img.freepik.com/premium-photo/adult-child-holding-kidney-shaped-paper-textured-blue-background-world-kidney-day-national-organ-donor-day-charity-donation-concept_49149-1211.jpg?w=2000");
+        
+        background-size :100% 100%;
+        background-repeat: no-repeat;
+        height: 700px;
+        position: relative;
+    } 
+    /* .regName{
+        margin-left: 900px;
+    } */
+    .reg{
+    text-decoration: none;
+    }
+    

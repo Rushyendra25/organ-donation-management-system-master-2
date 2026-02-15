@@ -1,0 +1,39 @@
+@-webkit-keyframes scale-up-center {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+  }
+  @keyframes scale-up-center {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+  }
+  
+.Card1
+{
+    animation: scale-up-center 2s 1s;
+   
+}
+.Card2
+{
+    animation: scale-up-center 4s 2s;
+}
+.Card3
+{
+    animation: scale-up-center 6s 3s;
+}
+.home
+{
+    animation: scale-up-center 0.3s;
+
+}
