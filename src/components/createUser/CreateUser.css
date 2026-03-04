@@ -2,3 +2,7 @@
     background-image: linear-gradient(#f3e6e7,#ffffff);
     background-size: cover;
 }
+.invalid{
+   padding-top:100px;
+   font-size: xx-large;
+}

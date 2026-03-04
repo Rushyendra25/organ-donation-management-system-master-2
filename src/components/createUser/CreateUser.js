@@ -103,7 +103,9 @@ function CreateUser() {
       </div>  
       </div>
       :
-      <p className='text-danger'>Unauthorized access!! Please Login </p>
+      <center>
+      <p className='text-danger invalid'>Unauthorized access!! Please Login </p>
+      </center>
     }
 
       </div>

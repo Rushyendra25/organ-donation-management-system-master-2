@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState,useEffect} from 'react'
+import { useSelector,useDispatch } from 'react-redux'
 import axios from 'axios'
 import {useForm} from 'react-hook-form'
 function UserList() {
  let [data,setdata]=useState([])
  let [search,setsearch]=useState('')
  const x=localStorage.getItem("token")
+ const isloggedIn=useSelector(state=>state.auth.isloggedIn)
  let {register,handleSubmit,formState:{errors}}=useForm();
     let submitForm=(userObj)=>{
             setsearch(userObj.organ)
@@ -19,11 +21,12 @@ function UserList() {
     })
    .catch(err=>console.log(err))
   },[]) 
+  console.log(x);
   
   return (
     <div>
    {
-    x!==null?
+    isloggedIn!==false?
     <div className='container'> 
 
      
@@ -235,7 +238,10 @@ function UserList() {
 
     </div>
     :
-    <p className='text-danger'>Unauthorized access!! Please Login </p>
+    <center>
+    <p className='text-danger invalid'>Unauthorized access!! Please Login </p>
+    </center>
+    
 }
     </div>
   )
