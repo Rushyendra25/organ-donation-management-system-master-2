@@ -1,250 +1,138 @@
-import React from 'react'
-import { useState,useEffect} from 'react'
-import { useSelector,useDispatch } from 'react-redux'
-import axios from 'axios'
-import {useForm} from 'react-hook-form'
-function UserList() {
- let [data,setdata]=useState([])
- let [search,setsearch]=useState('')
- const x=localStorage.getItem("token")
- const isloggedIn=useSelector(state=>state.auth.isloggedIn)
- let {register,handleSubmit,formState:{errors}}=useForm();
-    let submitForm=(userObj)=>{
-            setsearch(userObj.organ)
-         } 
+import React,{useState,useEffect} from "react";
+import axios from "axios";
+
+function UserList(){
+
+  const [data,setData] = useState([]);
+  const [filtered,setFiltered] = useState([]);
+
+  const [organ,setOrgan] = useState("");
+  const [blood,setBlood] = useState("");
+
   useEffect(()=>{
-   axios.get(" http://localhost:4000/user-api/donars")
-   .then((res)=>
-    {
-     
-      setdata(res.data)
+
+    axios.get("http://localhost:4000/user-api/donors")
+    .then(res=>{
+      setData(res.data);
+      setFiltered(res.data);
     })
-   .catch(err=>console.log(err))
-  },[]) 
-  console.log(x);
-  
-  return (
-    <div>
-   {
-    isloggedIn!==false?
-    <div className='container'> 
+    .catch(err=>console.log(err))
 
-     
-     
-      <form onSubmit={handleSubmit(submitForm)}>
-      <select {...register("organ")} className="form-select mt-3" defaultValue={"DEFAULT"}>
+  },[])
 
-                <option value="DEFAULT" disabled>Choose organ</option>
-                <option value="kidney">kidney</option>
-                <option value="heart">heart</option>
-                <option value="liver">liver</option>
-                <option value="lungs" >lungs</option>
-                <option value="pancreas" >pancreas</option>
+  const searchData=()=>{
 
-         </select>
-         <button type="submit" className="btn btn-danger opacity-75 mt-3 mb-5">Search</button>
-      </form>
+    let result = data.filter(item=>{
 
-    {
-      search==='' &&
-    <table className="table table-striped text-center">
-      <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'> 
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-        <th>Blood Group</th>
-        </tr>     
-      </thead>
-      <tbody>
-        {
-           data.map((obj)=>
-            <tr key={obj._id}>
-              <td>{obj.hname}</td>
-              <td>{obj.email}</td>
-              <td>{obj.phno}</td>
-              <td>{obj.bloodgrp}</td>
+      return (
+        (organ==="" || item.organ===organ) &&
+        (blood==="" || item.bloodGroup===blood)
+      )
+
+    })
+
+    setFiltered(result)
+
+  }
+
+  return(
+
+    <div className="container mt-4">
+
+      <div className="row mb-4">
+
+        <div className="col-md-4">
+
+          <select
+          className="form-select"
+          onChange={(e)=>setOrgan(e.target.value)}
+          >
+
+            <option value="">All Organs</option>
+            <option value="kidney">Kidney</option>
+            <option value="heart">Heart</option>
+            <option value="liver">Liver</option>
+            <option value="lungs">Lungs</option>
+            <option value="pancreas">Pancreas</option>
+
+          </select>
+
+        </div>
+
+        <div className="col-md-4">
+
+          <select
+          className="form-select"
+          onChange={(e)=>setBlood(e.target.value)}
+          >
+
+            <option value="">All Blood Groups</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+
+          </select>
+
+        </div>
+
+        <div className="col-md-4">
+
+          <button
+          className="btn btn-danger w-100"
+          onClick={searchData}
+          >
+            Search
+          </button>
+
+        </div>
+
+      </div>
+
+      <table className="table table-striped">
+
+        <thead className="table-danger">
+
+          <tr>
+            <th>Hospital</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Organ</th>
+            <th>Blood Group</th>
+            <th>Available Count</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {filtered.map((item,index)=>(
+
+            <tr key={index}>
+
+              <td>{item.hospitalName}</td>
+              <td>{item.email}</td>
+              <td>{item.phone}</td>
+              <td>{item.organ}</td>
+              <td>{item.bloodGroup}</td>
+              <td>{item.count}</td>
+
             </tr>
-          )
-        }
-      </tbody>
 
-      
-     </table>
-}
-{
-  search==='kidney'&&
-  <table className="table table-striped text-center">
-  <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'>
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-<th>Blood Group</th>
-<th>Organ</th>
-        </tr>
-        
-      </thead>
-  <tbody>
-    {
-       
-     data.filter((a)=>a.kidney!=="0").map(a=> <tr key={a._id}>
-        
-        <td>{a.hname}</td>
-        <td>{a.email}</td>
-        <td>{a.phno}</td>
-        <td>{a.bloodgrp}</td>
-        <td>kidney</td></tr>)      
-    }
-  </tbody>
+          ))}
 
-  
- </table>
-}
+        </tbody>
 
-{
-  search==='heart'&&
-  <table className="table table-striped text-center">
- <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'>
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-<th>Blood Group</th>
-<th>Organ</th>
-        </tr>
-        
-      </thead>
-  <tbody>
-    {
-       
-     data.filter((a)=>a.heart!=="0").map(a=> <tr key={a._id}>
-        
-        <td>{a.hname}</td>
-        <td>{a.email}</td>
-        <td>{a.phno}</td>
-        <td>{a.bloodgrp}</td>
-        <td>heart</td></tr>)  
-
-        
-      
-    }
-  </tbody>
-
-  
- </table>
-}
-
-{
-  search==='lungs'&&
-  <table className="table table-striped text-center">
-  <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'>
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-<th>Blood Group</th>
-<th>Organ</th>
-        </tr>
-        
-      </thead>
-  <tbody>
-    {
-       
-     data.filter((a)=>a.lungs!=="0").map(a=> <tr key={a._id}>
-        
-        <td>{a.hname}</td>
-        <td>{a.email}</td>
-        <td>{a.phno}</td>
-        <td>{a.bloodgrp}</td>
-        <td>lungs</td></tr>)  
-
-        
-      
-    }
-  </tbody>
-
-  
- </table>
-}
-
-
-{
-  search==='liver'&&
-  <table className="table table-striped text-center">
-  <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'>
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-<th>Blood Group</th>
-<th>Organ</th>
-        </tr>
-        
-      </thead>
-  <tbody>
-    {
-       
-     data.filter((a)=>a.liver!=="0").map(a=> <tr key={a._id}>
-        
-        <td>{a.hname}</td>
-        <td>{a.email}</td>
-        <td>{a.phno}</td>
-        <td>{a.bloodgrp}</td>
-        <td>liver</td></tr>)  
-
-        
-      
-    }
-  </tbody>
-
-  
- </table>
-}
-
-{
-  search==='pancreas'&&
-  <table className="table table-striped text-center">
-  <thead className='bg-danger opacity-75'>
-        <tr  className='text-light'>
-        <th>Hospital Name</th>
-        <th>Hospital Email</th>
-        <th>Phone Number</th>
-<th>Blood Group</th>
-<th>Organ</th>
-        </tr>
-        
-      </thead>
-  <tbody>
-    {
-       
-     data.filter((a)=>a.pancreas!=="0").map(a=> <tr key={a._id}>
-        
-        <td>{a.hname}</td>
-        <td>{a.email}</td>
-        <td>{a.phno}</td>
-        <td>{a.bloodgrp}</td>
-        <td>pancreas</td></tr>)  
-
-        
-      
-    }
-  </tbody>
-
-  
- </table>
-}
-     
+      </table>
 
     </div>
-    :
-    <center>
-    <p className='text-danger invalid'>Unauthorized access!! Please Login </p>
-    </center>
-    
-}
-    </div>
+
   )
+
 }
 
 export default UserList;

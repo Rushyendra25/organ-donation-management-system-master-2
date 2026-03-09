@@ -16,6 +16,7 @@ function Login() {
    .then(res=>{
     if(res.status===201){
     localStorage.setItem("token",res.data.jwtToken)
+    localStorage.setItem("username",res.data.user.username)
     dispatch(authActions.login())
     navigate('/createUser')
     }

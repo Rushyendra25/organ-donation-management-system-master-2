@@ -20,11 +20,11 @@ mclient
     
       const dbObj=dbRef.db('usersdb')
       const userCollectionObj=dbObj.collection('collection1')
-      const hospitalCollectionObj=dbObj.collection('collection2')
+      const organCollection=dbObj.collection('collection2')
       console.log("db connection successful")
     
      app.set("userCollectionObj",userCollectionObj)
-     app.set("hospitalCollectionObj",hospitalCollectionObj)
+     app.set("organCollection",organCollection)
     
 })
 .catch((err)=>console.log("db connection error"));

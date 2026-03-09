@@ -8,7 +8,8 @@ function Nav() {
   const dispatch=useDispatch()
   const isloggedIn=useSelector(state=>state.auth.isloggedIn)
   const logout=()=>{
-    localStorage.clear()
+    localStorage.removeItem("token")
+    localStorage.removeItem("username")
     dispatch(authActions.logout())
     navigate('/')
   }
@@ -49,6 +50,18 @@ function Nav() {
         isloggedIn &&
       <li className="nav-item">
         <Link className="nav-link mx-3 text-white navbarlinks" to="/userList">Donar List</Link>
+      </li>
+     }
+     {
+        isloggedIn &&
+      <li className="nav-item">
+        <Link className="nav-link mx-3 text-white navbarlinks" to="/profile">Profile</Link>
+      </li>
+     }
+     {
+        isloggedIn &&
+      <li className="nav-item">
+        <Link className="nav-link mx-3 text-white navbarlinks" to="/dashboard">Dashboard</Link>
       </li>
      }
      

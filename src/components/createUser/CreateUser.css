@@ -6,3 +6,9 @@
    padding-top:100px;
    font-size: xx-large;
 }
+.form{
+    width: 100rem;
+    height: fit-content;
+    padding-bottom: 20px;
+    
+}
